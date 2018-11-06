@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			body {
+				padding: 0;
+				margin: 0;
+				font-family: PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体;
+			}
+			
+			ul,
+			li {
+				list-style: none;
+			}
+			
+			.tm {
+				padding-top: 10px;
+				padding-right: 20px;
+			}
+			
+			.tm,
+			ul {
+				width: 800px;
+				font-size: 38px;
+				padding-left: 6px;
+			}
+			
+			.tm ul li {
+				border-left: 1px solid #000;
+				border-right: 1px solid #000;
+				border-top: 1px solid #000;
+				padding: 3px 20px;
+				text-align: center;
+				height: 157px;
+				display: flex;
+				align-items: center;
+			}
+			
+			.tm ul li i {
+				font-size: 48px;
+				font-weight: bold;
+				font-style: inherit;
+				display: table-cell;
+				vertical-align: middle;
+				margin: 0 auto;
+			}
+			
+			.tm ul li i,
+			.tm ul li i span {
+				display: inline-block;
+				font-weight: bold;
+			}
+			
+			.tm ul li i {
+				margin: 0 auto;
+				display: block;
+				font-style: normal;
+			}
+			
+			.tm ul li i span {
+				font-size: 90px;
+				padding-left: 20px;
+			}
+			
+			.tm ul li img {
+				height: 155px;
+				display: block;
+				margin: 0 auto;
+			}
+			
+			.tmli {
+				border-bottom: 1px solid;
+			}
+			
+			#test {
+				width: 800px;
+			}
+			
+			.mian {
+				width: 1250px;
+				margin: 0 auto;
+			}
+			
+			.left {
+				width: 800px;
+				float: left;
+			}
+			
+			.right {
+				width: 400px;
+				height: 600px;
+				float: right;
+				margin-left: 50px;
+			}
+			
+			.txt-left {
+				float: left;
+				width: 150px;
+			}
+			
+			.txt-right {
+				float: right;
+				width: 250px;
+			}
+			
+			.button {
+				width: 100%;
+				margin: 0 auto;
+				float: left;
+			}
+			
+			.button p {
+				background: red;
+				align-content: center;
+				font-size: 12px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div class="mian">
+			<div class="right">
+				<div class="txt-left">
+					<p>请输入条码1-500条</p>
+					<textarea name="txt-left" id="txt-left" rows="20" cols="18">8852023005713</textarea>
+				</div>
+				<div class="txt-right">
+					<p>请输入商品名称1-500条</p>
+					<textarea name="txt-right" id="txt-right" rows="20" cols="40">薯工坊海苔味192g</textarea>
+				</div>
+				<div class="button">
+					<p>使用方法如下:</p>
+					<p>1.从Excel复制条码和商品名称粘贴进来的到对于的文本框中，注意默认最后一行会有一个空行，需要手动把这个空行删除;</p>
+					<p>2.粘贴完毕点击下面的生成条码按钮，左边条码会自动生成;</p>
+					<p>3.接着点击下面的打印预览按钮，弹出打印对话框，注意需要把打印纸张设置成A5，纸张方向设置成横向，打印1张测试一下效果，如果效果没有问题可以继续打印剩下条码;</p>
+					<input type="button" onclick="Getvalue()" value="生成条码" id="barCode" />
+					<input type="button" onclick="doPrint();" value="打印预览" id="printPreview" />
+				</div>
+			</div>
+			<!--startprint-->
+			<div class="left">
+				<div id="test">
+
+					<!--在下面粘贴代码-->
+					<div class="tm">
+						<ul>
+							<li><img src="http://t.ashiyue.com/img/barcodegen/html/image.php?filetype=PNG&dpi=200&scale=3&rotation=0&font_
+						family=Arial.ttf&font_size=14&text=8852023005713&thickness=40&start=NULL&code=BCGcode128" /></li>
+							<li><i>885202300<span>5713</span></i></li>
+							<li class="tmli"><i>薯工坊海苔味192g</i></li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<!--endprint-->
+		</div>
+	</body>
+	<script type="text/javascript">
+		//1.分别获取textarea中的数据
+		//2.split根据换行分割   拼接成数组
+		//3.能否综合两个数组或者判断index来拼接模板
+		//4.根据数字前九位 和后面不固定位数   （使用 substring()或者slice() )
+		//5.循环数据 验证结果
+		//6.完善代码 封装
+		var imgurla = '<li><img src="http://t.ashiyue.com/img/barcodegen/html/image.php?filetype=PNG&dpi=200&scale=3&rotation=0&font_family=Arial.ttf&font_size=14&text=';
+		var imgurlb = '&thickness=40&start=NULL&code=BCGcode128"/></li>';
+
+		function Getvalue() {
+			var valueLeftTxt = document.getElementById("txt-left");
+			var valuerightTxt = document.getElementById("txt-right");
+
+			if(valueLeftTxt.value && valuerightTxt.value) {
+				var arrLeft = valueLeftTxt.value.split(/[(\r\n)\r\n]+/);
+				var arrRight = valuerightTxt.value.split(/[\r\n]+/);
+				var arr = [];
+				var template = '';
+				var testList = document.getElementById("test");
+
+				for(var i = 0; i < arrLeft.length; i++) {
+					arr.push({
+						v1: arrLeft[i].substr(0, 9),
+						v2: arrLeft[i].substr(9, arrLeft[i].length),
+						v3: arrRight[i]
+					});
+				}
+				for(var j = 0; j < arr.length; j++) {
+					template += '<div class="tm"><ul>';
+					//                  		var imgurlc=imgurla+arrLeft[j]+imgurlb;
+					//                  		alert(imgurlc);
+					template += imgurla + arrLeft[j] + imgurlb;
+					//	                    	template += imgurlc;
+					//	                    	alert(arrLeft[j]);
+					template += '<li><i>' + arr[j].v1 + '<span>' + arr[j].v2 + '</span></i></li>';
+					template += '<li class="tmli"><i>' + arr[j].v3 + '</i></li>';
+					template += '</ul></div>';
+				}
+				testList.innerHTML = template
+			}
+		}
+
+		function doPrint() {
+
+			bdhtml = window.document.body.innerHTML;
+
+			sprnstr = "<!--startprint-->"; //开始打印标识字符串有17个字符
+
+			eprnstr = "<!--endprint-->"; //结束打印标识字符串
+
+			prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17); //从开始打印标识之后的内容
+
+			prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+
+			window.document.body.innerHTML = prnhtml; //把需要打印的指定内容赋给body.innerHTML
+
+			window.print(); //调用浏览器的打印功能打印指定区域
+
+			window.document.body.innerHTML = bdhtml; // 最后还原页面
+
+		}
+	</script>
+
+</html>
