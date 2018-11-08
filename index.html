@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -65,7 +66,7 @@
 				padding-left: 20px;
 			}
 			
-			.tm ul li img {
+			.bar {
 				height: 155px;
 				display: block;
 				margin: 0 auto;
@@ -117,6 +118,14 @@
 				align-content: center;
 				font-size: 12px;
 			}
+			.logo{
+				padding: 0;
+				margin: 0 -145px 0 0;
+				position: relative;
+				top:-60px;
+				right:130px ;
+				height: 30px;
+			}
 		</style>
 
 	</head>
@@ -148,8 +157,12 @@
 					<!--在下面粘贴代码-->
 					<div class="tm">
 						<ul>
-							<li><img src="http://t.ashiyue.com/img/barcodegen/html/image.php?filetype=PNG&dpi=200&scale=3&rotation=0&font_
-						family=Arial.ttf&font_size=14&text=8852023005713&thickness=40&start=NULL&code=BCGcode128" /></li>
+							<li><img  class="bar" src="http://t.ashiyue.com/img/barcodegen/html/image.php?filetype=PNG&dpi=200&scale=3&rotation=0&font_
+						family=Arial.ttf&font_size=14&text=8852023005713&thickness=40&start=NULL&code=BCGcode128" />
+							<img class="logo" src="https://exmail.qq.com/cgi-bin/viewfile?f=00D68536BF657C1967EF76444EDCEE087
+									B8E80214C551D61F98C0662070DC6D1FF58CA1C1CA12D747247FB3B10279E4CC2CCF26EFC4242ECED0A6B9
+									913D621007448C9ACBBF58DCC&sid=HoSHxVvBrxLxX3cs,7&type=logo&domain=zskuaixiao.com" />
+							</li>
 							<li><i>885202300<span>5713</span></i></li>
 							<li class="tmli"><i>薯工坊海苔味192g</i></li>
 						</ul>
@@ -167,8 +180,8 @@
 		//4.根据数字前九位 和后面不固定位数   （使用 substring()或者slice() )
 		//5.循环数据 验证结果
 		//6.完善代码 封装
-		var imgurla = '<li><img src="http://t.ashiyue.com/img/barcodegen/html/image.php?filetype=PNG&dpi=200&scale=3&rotation=0&font_family=Arial.ttf&font_size=14&text=';
-		var imgurlb = '&thickness=40&start=NULL&code=BCGcode128"/></li>';
+		var imgurla = '<li><img class="bar" src="http://t.ashiyue.com/img/barcodegen/html/image.php?filetype=PNG&dpi=200&scale=3&rotation=0&font_family=Arial.ttf&font_size=14&text=';
+		var imgurlb = '&thickness=40&start=NULL&code=BCGcode128" /><img class="logo" src="https://exmail.qq.com/cgi-bin/viewfile?f=00D68536BF657C1967EF76444EDCEE087B8E80214C551D61F98C0662070DC6D1FF58CA1C1CA12D747247FB3B10279E4CC2CCF26EFC4242ECED0A6B9913D621007448C9ACBBF58DCC&sid=HoSHxVvBrxLxX3cs,7&type=logo&domain=zskuaixiao.com" />';
 
 		function Getvalue() {
 			var valueLeftTxt = document.getElementById("txt-left");
