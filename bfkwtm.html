@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>备货区库位标签打印程序</title>
+		<style type="text/css">
+			body {
+				padding: 0;
+				margin: 0;
+				font-family: PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体;
+			}
+			a{
+								text-decoration: none
+				
+			}
+			
+			ul,
+			li {
+				list-style: none;
+				margin: 0;
+			}
+			
+			.tm {
+				padding-top: 10px;
+				padding-right: 20px;
+				margin-bottom:20px ;
+			}
+			
+			.tm,
+			ul {
+				width: 500px;
+				height: 272px;
+				/* font-size: 38px; */
+				padding: 0;
+				margin: 15px 0;
+				margin-bottom: 10px;
+				float: left;
+			}
+			
+			.tm ul li {
+				/* border-left: 1px solid #000; */
+				/* border-right: 1px solid #000; */
+				/* border-top: 1px solid #000; */
+				padding: 3px 20px;
+				text-align: center;
+				display: flex;
+				align-items: center;
+			}
+			
+			.tm ul li i {
+				font-size: 48px;
+				font-weight: bold;
+				font-style: inherit;
+				display: table-cell;
+				vertical-align: middle;
+				margin: 0 auto;
+			}
+			
+			.tm ul li i,
+			.tm ul li i span {
+				display: inline-block;
+				font-weight: bold;
+			}
+			
+			.tm ul li i {
+				margin: 0 auto;
+				display: block;
+				font-style: normal;
+				font-size: 180px;
+			}
+			
+			.tm ul li i span {
+				font-size: 90px;
+				padding-left: 20px;
+			}
+			
+			.bar {
+				height: 155px;
+				display: block;
+				margin: 0 auto;
+			}
+			
+			#test .tm .tmli {
+				line-height: 272px;
+			}
+			
+			
+			#test {
+				width: 500px;
+			}
+			
+			.mian {
+				width: 1100px;
+				margin: 0 auto;
+			}
+			
+			.left {
+				width: 500px;
+				float: left;
+			}
+			
+			.right {
+				width: 500px;
+				height: 600px;
+				float: right;
+				margin-left: 50px;
+			}
+			
+			.txt-left {
+				float: left;
+				width: 150px;
+				height: auto;
+			}
+			
+			.txt-right {
+				float: right;
+				width: 250px;
+			}
+			
+			.button {
+				width: 300px;
+				margin: 0 auto;
+				float: left;
+				margin-top: 42px;
+			}
+			
+			.button p {
+				align-content: center;
+				font-size: 12px;
+			}
+			.logo{
+				padding: 0;
+				margin: 0 -128px 0 0;
+				position: relative;
+				top:-60px;
+				right:115px ;
+				height: 30px;
+			}
+			.top{
+				width: 100%;
+				background: #333333;
+				
+			}
+			.top a{
+								color: #fff;
+				font-size: 26px;
+				padding: 10px;
+				text-decoration: none
+				
+			}
+			.txt-left i{
+				color: #FF0000;
+			}
+			.button a{
+				text-decoration: none;
+    background: #50e86e;
+    border-radius: 3px;
+    padding: 5px;
+    margin: 0;
+    color: #fff;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div class="top"><a href="index.html">返回主页</a></div>
+		<div class="mian">
+				
+			<div class="right">
+				<div class="txt-left">
+					<p>请输入备货区库位<br><i>建议不要超过100条</i></p>
+					<textarea name="txt-left" id="txt-left" rows="20" cols="18">A010</textarea>
+				</div>
+
+				<div class="button">
+					<p><h3>使用方法如下:</h3></p>
+					<p>1.<a href="http://note.youdao.com/noteshare?id=781c2ffd401bcc9b112aa99c3318f0d1" target="_blank">点击查看使用方法</a></p>
+					<p>2.完成以上设置后从Excel复制库位粘贴进文本框中，注意默认最后一行会有一个空行，需要手动把这个空行删除;</p>
+					<p>3.粘贴完毕点击下面的生成库位按钮，左边条码会自动生成;</p>
+					<p>4.预览效果没有问题之后打印1张测试一下效果，如果效果没有问题可以继续打印剩下库位;</p>
+					<input type="button" onclick="Getvalue()" value="生成库位" id="barCode" />
+					<input type="button" onclick="doPrint();" value="打印预览" id="printPreview" />
+				</div>
+			</div>
+			<!--startprint-->
+			<div class="left">
+				<div id="test">
+
+					<!--在下面粘贴代码-->
+					<div class="tm">
+						<ul>				
+							<li class="tmli"><i>A010</i></li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+			<!--endprint-->
+		</div>
+	</body>
+	<script type="text/javascript">
+		//1.分别获取textarea中的数据
+		//2.split根据换行分割   拼接成数组
+		//3.能否综合两个数组或者判断index来拼接模板
+		//4.根据数字前九位 和后面不固定位数   （使用 substring()或者slice() )
+		//5.循环数据 验证结果
+		//6.完善代码 封装
+		// var imgurla = '<li><img class="bar" src="http://t.ashiyue.com/img/barcodegen/html/image.php?filetype=PNG&dpi=30&scale=100&rotation=0&font_family=Arial.ttf&font_size=0&text=';
+		// var imgurlb = '&thickness=60&start=NULL&code=BCGcode128" />';
+		function Getvalue() {
+			var valueLeftTxt = document.getElementById("txt-left");
+
+			if(valueLeftTxt.value) {
+				var arrLeft = valueLeftTxt.value.split(/[(\r\n)\r\n]+/);
+				var arr = [];
+				var template = '';
+				var testList = document.getElementById("test");
+
+				for(var i = 0; i < arrLeft.length; i++) {
+					arr.push({
+						v1: arrLeft[i].substr(0, 9),
+						v2: arrLeft[i].substr(9, arrLeft[i].length),
+					});
+				}
+				for(var j = 0; j < arr.length; j++) {
+					template += '<div class="tm"><ul>';
+					
+					// template += imgurla + arrLeft[j] + imgurlb;
+					
+					template += '<li class="tmli"><i>' +arrLeft[j]+ '</i></li>';
+					template += '</ul></div>';
+				}
+				testList.innerHTML = template
+			}
+		}
+
+		function doPrint() {
+
+			bdhtml = window.document.body.innerHTML;
+
+			sprnstr = "<!--startprint-->"; //开始打印标识字符串有17个字符
+
+			eprnstr = "<!--endprint-->"; //结束打印标识字符串
+
+			prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17); //从开始打印标识之后的内容
+
+			prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+
+			window.document.body.innerHTML = prnhtml; //把需要打印的指定内容赋给body.innerHTML
+
+			window.print(); //调用浏览器的打印功能打印指定区域
+
+			window.document.body.innerHTML = bdhtml; // 最后还原页面
+
+		}
+	</script>
+
+</html>
